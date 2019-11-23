@@ -16,7 +16,9 @@ public class FrequencyCalculatorTest {
 
     @Test
     public void when_frequencyCalculatorIsCreated_getFrequencyReturnsListOfSizeOne() {
-        List<Integer> frequencies = frequencyCalculator.getFrequencies();
+        List<Integer> frequencies = frequencyCalculator.getFrequencyLog();
+        assertEquals(1, frequencies.size());
+        assertEquals(java.util.Optional.of(0).get(), frequencies.get(0));
     }
 
     @Test
@@ -28,14 +30,23 @@ public class FrequencyCalculatorTest {
     public void when_positiveFrequenciesAreAdded_totalFrequencyIncreases() {
         frequencyCalculator.add(1);
         frequencyCalculator.add(1);
+        List<Integer> frequencies = frequencyCalculator.getFrequencyLog();
         assertEquals(frequencyCalculator.getTotalFrequency(), 2);
+        assertEquals(3, frequencies.size());
+        assertEquals(java.util.Optional.of(1).get(), frequencies.get(1));
+        assertEquals(java.util.Optional.of(2).get(), frequencies.get(2));
+
     }
 
     @Test
     public void when_negativeFrequenciesAreAdded_totalFrequencyDecreases() {
         frequencyCalculator.add(-1);
         frequencyCalculator.add(-2);
+        List<Integer> frequencies = frequencyCalculator.getFrequencyLog();
         assertEquals(frequencyCalculator.getTotalFrequency(), -3);
+        assertEquals(3, frequencies.size());
+        assertEquals(java.util.Optional.of(-1).get(), frequencies.get(1));
+        assertEquals(java.util.Optional.of(-3).get(), frequencies.get(2));
     }
 
     @Test
@@ -44,6 +55,13 @@ public class FrequencyCalculatorTest {
         frequencyCalculator.add("2");
         frequencyCalculator.add("+2");
         frequencyCalculator.add("-1");
+        List<Integer> frequencies = frequencyCalculator.getFrequencyLog();
         assertEquals(frequencyCalculator.getTotalFrequency(), 4);
+        assertEquals(5, frequencies.size());
+        assertEquals(java.util.Optional.of(1).get(), frequencies.get(1));
+        assertEquals(java.util.Optional.of(3).get(), frequencies.get(2));
+        assertEquals(java.util.Optional.of(5).get(), frequencies.get(3));
+        assertEquals(java.util.Optional.of(4).get(), frequencies.get(4));
+
     }
 }
